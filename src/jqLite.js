@@ -198,7 +198,14 @@ function JQLite(element) {
     var div = document.createElement('div');
     // Read about the NoScope elements here:
     // http://msdn.microsoft.com/en-us/library/ms533897(VS.85).aspx
-    div.innerHTML = '<div>&#160;</div>' + element; // IE insanity to make NoScope elements work!
+    if (msapp) {
+        // enables dynamic content injection on Windows 8 JS apps
+        msapp.execUnsafeLocalFunction(function () {
+            div.innerHTML = '<div>&#160;</div>' + element; // IE insanity to make NoScope elements work!
+        });
+    } else {
+        div.innerHTML = '<div>&#160;</div>' + element; // IE insanity to make NoScope elements work!
+    }
     div.removeChild(div.firstChild); // remove the superfluous div
     jqLiteAddNodes(this, div.childNodes);
     var fragment = jqLite(document.createDocumentFragment());
@@ -625,6 +632,17 @@ forEach({
       return this;
     }
   };
+
+  // enables dynamic content injection on Windows 8 JavaScript apps
+  if (msapp) {
+    var unsafeFunc = JQLite.prototype[name];
+      JQLite.prototype[name] = function (arg1, arg2) {
+          var me = this;
+          return msapp.execUnsafeLocalFunction(function () {
+            return unsafeFunc.call(me, arg1, arg2);
+          });
+      };
+  }
 });
 
 function createEventHandler(element, events) {
@@ -908,6 +926,16 @@ forEach({
     return isDefined(value) ? value : this;
   };
 
+  // enables dynamic content injection on Windows 8 JavaScript apps
+  if (msapp) {
+    var unsafeFunc = JQLite.prototype[name];
+    JQLite.prototype[name] = function (arg1, arg2, arg3) {
+      var me = this;
+      return msapp.execUnsafeLocalFunction(function () {
+          return unsafeFunc.call(me, arg1, arg2, arg3);
+       });
+    };
+  }
   // bind legacy bind/unbind to on/off
   JQLite.prototype.bind = JQLite.prototype.on;
   JQLite.prototype.unbind = JQLite.prototype.off;

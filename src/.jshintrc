@@ -23,6 +23,7 @@
     /* angular.js */
     "angular": false,
     "msie": false,
+    "msapp": false,
     "jqLite": false,
     "jQuery": false,
     "slice": false,
