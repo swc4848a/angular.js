@@ -23,7 +23,8 @@
     /* angular.js */
     "angular": false,
     "msie": false,
-    "msapp": false,
+    "windowsStore": false,
+    "MSApp": false,
     "jqLite": false,
     "jQuery": false,
     "slice": false,

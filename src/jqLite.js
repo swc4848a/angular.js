@@ -198,9 +198,9 @@ function JQLite(element) {
     var div = document.createElement('div');
     // Read about the NoScope elements here:
     // http://msdn.microsoft.com/en-us/library/ms533897(VS.85).aspx
-    if (msapp) {
+    if (windowsStore) {
         // enables dynamic content injection on Windows 8 JS apps
-        msapp.execUnsafeLocalFunction(function () {
+        MSApp.execUnsafeLocalFunction(function () {
             div.innerHTML = '<div>&#160;</div>' + element; // IE insanity to make NoScope elements work!
         });
     } else {
@@ -634,11 +634,11 @@ forEach({
   };
 
   // enables dynamic content injection on Windows 8 JavaScript apps
-  if (msapp) {
+  if (windowsStore) {
     var unsafeFunc = JQLite.prototype[name];
       JQLite.prototype[name] = function (arg1, arg2) {
           var me = this;
-          return msapp.execUnsafeLocalFunction(function () {
+          return MSApp.execUnsafeLocalFunction(function () {
             return unsafeFunc.call(me, arg1, arg2);
           });
       };
@@ -927,11 +927,11 @@ forEach({
   };
 
   // enables dynamic content injection on Windows 8 JavaScript apps
-  if (msapp) {
+  if (windowsStore) {
     var unsafeFunc = JQLite.prototype[name];
     JQLite.prototype[name] = function (arg1, arg2, arg3) {
       var me = this;
-      return msapp.execUnsafeLocalFunction(function () {
+      return MSApp.execUnsafeLocalFunction(function () {
           return unsafeFunc.call(me, arg1, arg2, arg3);
        });
     };
