@@ -4,7 +4,7 @@
 /* global
     -angular,
     -msie,
-    -msapp,
+    -windowsStore,
     -jqLite,
     -jQuery,
     -slice,
@@ -154,7 +154,7 @@ if ('i' !== 'I'.toLowerCase()) {
 
 var /** holds major version number for IE or NaN for real browsers */
     msie,
-    msapp,            // Windows Store JS apps
+    windowsStore,     // Windows Store JS apps
     jqLite,           // delay binding since jQuery could be loaded after us.
     jQuery,           // delay binding
     slice             = [].slice,
@@ -181,8 +181,7 @@ if (isNaN(msie)) {
 
 // The MSApp object is supported only in Windows Store JavaScript apps.
 // http://msdn.microsoft.com/en-us/library/windows/apps/hh767332.aspx
-/* global MSApp: false */
-msapp = typeof window.MSApp != 'undefined' ? true : false;
+windowsStore = typeof window.MSApp != 'undefined' ? true : false;
 
 /**
  * @private
