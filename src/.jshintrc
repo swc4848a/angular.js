@@ -118,6 +118,7 @@
     "jqNextId": false,
     "camelCase": false,
     "jqLitePatchJQueryRemove": false,
+    "jqLitePatchJQueryForWindowsStore": false,
     "JQLite": false,
     "jqLiteClone": false,
     "jqLiteDealoc": false,

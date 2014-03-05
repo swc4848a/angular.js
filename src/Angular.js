@@ -1314,6 +1314,8 @@ function bindJQuery() {
     jqLitePatchJQueryRemove('remove', true, true, false);
     jqLitePatchJQueryRemove('empty', false, false, false);
     jqLitePatchJQueryRemove('html', false, false, true);
+    // additional tweaks for Windows Store apps
+    jqLitePatchJQueryForWindowsStore();
   } else {
     jqLite = JQLite;
   }

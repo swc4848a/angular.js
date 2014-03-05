@@ -179,6 +179,30 @@ function jqLitePatchJQueryRemove(name, dispatchThis, filterElems, getterIfNoArgu
   }
 }
 
+/**
+ * Adds tweaks to jquery library to pass Windows Store apps security restrictions.
+ * Dynamic content injection could be done only via special mechanizm.
+ */
+function jqLitePatchJQueryForWindowsStore() {
+
+    // patch is required for Windows8 JS apps only
+    if (!windowsStore) {
+        return;
+    }
+    // list of the functions which must be patched
+    ['domManip', 'html'].forEach(function (funcName) {
+        var unsafeFunc = jQuery.prototype[funcName];
+        // wrap unsafe function call with MSApp.execUnsafeLocalFunction
+        jQuery.prototype[funcName] = function (arg1, arg2) {
+            var me = this;
+            return MSApp.execUnsafeLocalFunction(function () {
+                return unsafeFunc.call(me, arg1, arg2);
+            });
+        };
+
+    });
+}
+
 /////////////////////////////////////////////
 function JQLite(element) {
   if (element instanceof JQLite) {
